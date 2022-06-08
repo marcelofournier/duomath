@@ -1,0 +1,292 @@
+
+
+Requisitos do sistema:
+
+
+    nivel
+    mudança de nivel
+    pontuacao
+    pontos de hoje
+    meta concluida no dia
+    energia
+    treino concluído: 3 pontos
+    lição concluída: 5 pontos
+    compra de energia por 15 pontos
+
+
+to do list: semana 01/03
+
+
+
+    1. alterar texto Crie sua conta grátis, de acordo com o caso.
+
+
+
+    1. verificacao de mudança de data para zerar pontos;
+    2. incluir estrela na meta diaria de pontos
+    3. incluir estrela na meta diaria de prova concluida
+    4. incluir necessidade de fazer pelo menos 1 teste por dia
+    5. melhorar a tela meta batida
+    6. melhorar a tela de registro
+    7. rever a estrutura do codigo fonte
+    8. utilizar a estrutura de drawer e fragments
+    9. criar tela de dados de contato do desenvolvedor
+    10. criar item de menu compartilhar app
+    11. criar um dialog sim/não no salvar registo vai zerar os dados
+    12. criar uma intent de notificacao ao usuario
+    13. criar slider com introducao de uso do app
+    14. criar tela de avaliacao do app
+    15. usar banco de dados SQLite ou firebase
+    16.
+
+    20. inserir app na play store.
+
+
+to do list:
+    1. mudança de nivel do aluno
+    2. compra de energia por 15 pontos
+    3. controle de pontos do dia
+    4. controle de meta do dia
+    5. telas de conclusão de etapa
+    6. sliders de introdução
+    7. notificacao do app
+
+    1. engrossar o progressBar na tela Treino
+    2. ajustar tamanho do botao CONTINUAR na tela Lição
+    3.
+
+
+    27.02.2021
+    corrigir texto na base da tela Treino;
+
+
+
+
+//*******************************************************************************************
+
+        getSupportActionBar().setTitle("DuoMath beta");
+
+//*******************************************************************************************
+
+
+FloatingActionButton fab = findViewById(R.id.fab);
+fab.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+});
+
+//*******************************************************************************************
+
+public class DataFormatada {
+
+    public static String dataAtual(){
+        long data = System.currentTimeMillis();
+        SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dataString = SimpleDateFormat.format(data);
+        return dataString;
+    }
+
+
+
+//*******************************************************************************************
+
+
+    public void criaBanco(){
+/*
+   private String  nome;
+    private String  email;
+    private int     meta;
+    private int     ofensiva;
+    private int     pontos;
+    private int     energia;
+    private int     progresso;
+    private int     pontosHoje;
+    private int     nivel;
+    private boolean dia;
+    private String  hoje;
+
+ */
+        try{
+            SQLiteDatabase bancoDados = openOrCreateDatabase("banco_duoMath_01", MODE_PRIVATE, null);
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS aluno ( " +
+                    "nome VARCHAR, " +
+                    "email VARCHAR, " +
+                    "meta INT(3)," +
+                    "ofensiva INT(4)," +
+                    "pontos INT(4)," +
+                    "energia INT(2)," +
+                    "progresso INT(2)," +
+                    "pontosHoje INT(3)," +
+                    "nivel INT(2)," +
+                    "dia BOOLEAN," +
+                    "hoje VARCHAR ) ");
+
+            aluno.mensagem("Banco de dados criado com sucesso!");
+        }catch (Exception e){
+            //e.printStackTrace();
+            aluno.mensagem("Erro ao tentar criar o banco de dados." + e);
+        }
+    }
+
+    //*******************************************************************************************
+
+
+                /*
+                Intent intent = new Intent(getApplicationContext(), SegundaActivity.class);
+                //instanciar objeto
+                Usuario usuario = new Usuario("Marcelo", "marcelo.fournier@gmail.com");
+                intent.putExtra( "nome", "Marcelo");
+                intent.putExtra( "idade", 48);
+                intent.putExtra("objeto", usuario);
+                startActivity( intent );
+                */
+
+                enviarDados();
+            }
+        });
+
+    }
+
+    public void enviarDados(){
+        Intent intent = new Intent(getApplicationContext(), SegundaActivity.class);
+        //instanciar objeto
+        Usuario usuario = new Usuario("Marcelo", "marcelo.fournier@gmail.com");
+        intent.putExtra( "nome", "Marcelo");
+        intent.putExtra( "idade", 48);
+        intent.putExtra("objeto", usuario);
+        startActivity( intent );
+    }
+
+
+    public void recuperaDados(){
+        SharedPreferences preferences = getSharedPreferences("ARQUIVO_PREFERENCIA", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+/*
+        //validar o nome preenchido pelo usuario
+        if(campoNomeX.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Preencha o nome", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            String nome = campoNomeX.getText().toString();
+            String data = "21/01/2021";
+            editor.putString("nome", nome);
+            editor.putString("data", data);
+            editor.commit();
+
+            campoMensagemX.setText("Ola " + nome + " " + data);
+
+        }
+*/
+    }
+
+
+    public void carregaDados(){
+        SharedPreferences preferences = getSharedPreferences("ARQUIVO_PREFERENCIA", 0);
+        if (preferences.contains("nome")){
+            String nome = preferences.getString("nome", "Nao definido");
+            String email = preferences.getString("email", "Nao definido");
+            int meta = preferences.getInt("meta", 20);
+
+            //String data = preferences.getString("data", "data nao definida");
+            String dadosRecuperados = nome + " " + email + " " + meta;
+            Toast.makeText(getApplicationContext(), dadosRecuperados, Toast.LENGTH_LONG).show();
+            //.setText("ola " + nome + " " + data );
+        }else {
+        }
+    }
+
+
+
+
+
+private void exemplo_lista_single() {
+    //Lista de itens
+    ArrayList<String> itens = new ArrayList<String>();
+    itens.add("Ruim");
+    itens.add("Mediano");
+    itens.add("Bom");
+    itens.add("Ótimo");
+
+    //adapter utilizando um layout customizado (TextView)
+    ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_alerta, itens);
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Qualifique este software:");
+    //define o diálogo como uma lista, passa o adapter.
+    builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface arg0, int arg1) {
+            Toast.makeText(MainActivity.this, "posição selecionada=" + arg1, Toast.LENGTH_SHORT).show();
+            alerta.dismiss();
+        }
+    });
+
+    alerta = builder.create();
+    alerta.show();
+}
+
+
+
+
+
+// setup the alert builder
+AlertDialog.Builder builder = new AlertDialog.Builder(context);
+builder.setTitle("Choose an animal");
+// add a list
+String[] animals = {"horse", "cow", "camel", "sheep", "goat"};
+builder.setItems(animals, new DialogInterface.OnClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case 0: // horse
+            case 1: // cow
+            case 2: // camel
+            case 3: // sheep
+            case 4: // goat
+        }
+    }
+});
+// create and show the alert dialog
+AlertDialog dialog = builder.create();
+dialog.show();
+
+
+
+
+
+
+new Timer().schedule(new TimerTask() {
+    @Override
+    public void run() {
+        // this code will be executed after 2 seconds
+    }
+}, 2000);
+
+
+
+
+new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+    @Override
+    public void run() {
+        //Do something here
+    }
+}, 5000);
+
+
+
+
+
+Class MonitorTempo extends Thread{
+  private boolean contagemFinalizada = false;
+  public void run(){
+    Thread.sleep(500);
+    contageFinalizada = true;
+  }
+
+  public boolean isContagemFinalizada(){
+    return this.contagemFinalizada;
+  }
+}
